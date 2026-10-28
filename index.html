@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="googlebot" content="noindex, nofollow, noarchive">
+  <meta name="theme-color" content="#101612">
+  <meta name="description" content="A personal note from Jerry Liu.">
+  <meta property="og:title" content="What I will change">
+  <meta property="og:description" content="A personal note from Jerry Liu.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="What I will change">
+  <meta name="twitter:description" content="A personal note from Jerry Liu.">
+  <title>What I will change</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23101612'/%3E%3Cpath d='M16 27c.2-7 3.2-11 3.4-18' stroke='%23c9a36a' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/instrument-serif-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/instrument-serif-400-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/newsreader-430.woff2" as="font" type="font/woff2" crossorigin>
+  <script>document.documentElement.classList.add("js");</script>
+  <style>
+    @font-face {
+      font-family: "Instrument Serif";
+      src: url("fonts/instrument-serif-400.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Instrument Serif";
+      src: url("fonts/instrument-serif-400-italic.woff2") format("woff2");
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Newsreader";
+      src: url("fonts/newsreader-430.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #101612;
+      --ink: #f4efe6;
+      --muted: #d7d0c3;
+      --quiet: #b7b1a4;
+      --gold: #c9a36a;
+      --gold-soft: rgba(201, 163, 106, 0.72);
+      --line: rgba(201, 163, 106, 0.42);
+      --ease: cubic-bezier(.16, 1, .3, 1);
+      --pad-x: max(1.35rem, env(safe-area-inset-left));
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      min-height: 100%;
+      font-family: "Newsreader", "Iowan Old Style", Palatino, Georgia, serif;
+    }
+
+    html.js, html.js body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    ::selection {
+      background: rgba(201, 163, 106, 0.32);
+      color: #fffaf3;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    .slide:focus-visible {
+      outline: 1px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .sky, .grain, .frame {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .sky {
+      z-index: 0;
+      background:
+        radial-gradient(ellipse at 78% -8%, rgba(214, 186, 132, 0.18), transparent 42%),
+        radial-gradient(ellipse at -10% 108%, rgba(52, 86, 68, 0.55), transparent 46%),
+        radial-gradient(ellipse at 50% 120%, rgba(0, 0, 0, 0.38), transparent 42%),
+        var(--bg);
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(8px);
+    }
+
+    .orb-a {
+      width: 52vw;
+      height: 52vw;
+      min-width: 280px;
+      min-height: 280px;
+      top: -18vh;
+      right: -8vw;
+      background: radial-gradient(circle, rgba(214, 186, 132, 0.2), transparent 68%);
+    }
+
+    .orb-b {
+      width: 46vw;
+      height: 46vw;
+      min-width: 240px;
+      min-height: 240px;
+      bottom: -20vh;
+      left: -14vw;
+      background: radial-gradient(circle, rgba(64, 104, 82, 0.32), transparent 70%);
+    }
+
+    .sky::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.38) 100%);
+    }
+
+    .grain {
+      z-index: 2;
+      opacity: 0.18;
+      mix-blend-mode: overlay;
+      background-image: url("grain.png");
+      background-size: 180px 180px;
+    }
+
+    .frame {
+      z-index: 6;
+      inset: calc(0.65rem + env(safe-area-inset-top)) calc(0.65rem + env(safe-area-inset-right)) calc(0.65rem + env(safe-area-inset-bottom)) calc(0.65rem + env(safe-area-inset-left));
+    }
+
+    .frame i {
+      position: absolute;
+      width: 0.95rem;
+      height: 0.95rem;
+      border: 1px solid var(--line);
+    }
+
+    .frame .tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+    .frame .tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+    .frame .bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+    .frame .br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+    .topbar, .nav {
+      position: fixed;
+      z-index: 7;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    .topbar {
+      top: 0;
+      padding: calc(1.15rem + env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) 0 max(1.5rem, env(safe-area-inset-left));
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--quiet);
+    }
+
+    .topbar.is-first .brand { opacity: 0; }
+
+    .count b {
+      font-weight: 560;
+      color: var(--ink);
+      letter-spacing: 0.16em;
+    }
+
+    .count span {
+      color: rgba(183, 177, 164, 0.8);
+      letter-spacing: 0.16em;
+    }
+
+    .deck {
+      position: relative;
+      z-index: 1;
+    }
+
+    html.js .deck {
+      height: 100dvh;
+    }
+
+    .slide {
+      display: grid;
+      align-items: center;
+      align-items: safe center;
+      justify-items: center;
+      min-height: 100dvh;
+      padding: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      touch-action: pan-y;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(201, 163, 106, 0.35) transparent;
+    }
+
+    html.js .slide {
+      position: absolute;
+      inset: 0;
+      top: calc(3.15rem + env(safe-area-inset-top));
+      bottom: calc(4.55rem + env(safe-area-inset-bottom));
+      min-height: 0;
+      height: auto;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      animation: none;
+      transition: none;
+    }
+
+    html.js .slide.is-active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    html.js .slide-inner {
+      padding-top: 0.85rem;
+      padding-bottom: 1rem;
+    }
+
+    html.js .spine {
+      top: 0.95rem;
+      bottom: 0.95rem;
+    }
+
+    .slide-inner {
+      position: relative;
+      width: min(36rem, calc(100% - 3.2rem - env(safe-area-inset-left) - env(safe-area-inset-right)));
+      margin: auto;
+      padding: calc(5.2rem + env(safe-area-inset-top)) 0 calc(6.4rem + env(safe-area-inset-bottom)) 1.15rem;
+    }
+
+    .slide-problem .slide-inner,
+    .slide-title .slide-inner,
+    .slide-close .slide-inner {
+      width: min(46rem, calc(100% - 3.2rem - env(safe-area-inset-left) - env(safe-area-inset-right)));
+    }
+
+    .spine {
+      position: absolute;
+      left: 0;
+      top: calc(5.35rem + env(safe-area-inset-top));
+      bottom: calc(6.5rem + env(safe-area-inset-bottom));
+      width: 1px;
+      background: linear-gradient(var(--gold), rgba(201, 163, 106, 0));
+      opacity: 0.8;
+    }
+
+    .kicker, .hint, .topbar, .nav, .count {
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    .kicker {
+      margin: 0 0 1.05rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #ead7b4;
+    }
+
+    h1, h2, .finale, .quote, .signature {
+      font-family: "Instrument Serif", "Iowan Old Style", Palatino, Georgia, serif;
+      font-weight: 400;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3.35rem, min(11vw, 16vh), 7.15rem);
+      line-height: 0.88;
+      letter-spacing: -0.035em;
+    }
+
+    h1 em { font-style: italic; }
+
+    h2 {
+      margin: 0 0 1.15rem;
+      font-size: clamp(2.45rem, min(7vw, 11vh), 4.5rem);
+      line-height: 0.94;
+      letter-spacing: -0.03em;
+    }
+
+    .lede, .prose, .quote {
+      color: var(--ink);
+    }
+
+    .lede {
+      max-width: 28rem;
+      margin: 1.45rem 0 0;
+      font-size: clamp(1.16rem, 2.3vw, 1.48rem);
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .hint {
+      margin: 2.4rem 0 0;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #cfc6b6;
+    }
+
+    .quote {
+      margin: 0;
+      max-width: 17em;
+      font-style: italic;
+      font-size: clamp(1.78rem, min(4.5vw, 6.4vh), 2.85rem);
+      line-height: 1.28;
+      letter-spacing: -0.02em;
+    }
+
+    .prose {
+      max-width: 38em;
+      font-size: clamp(1.06rem, 2.05vw, 1.26rem);
+      line-height: 1.62;
+      color: #efe8dc;
+    }
+
+    .prose p { margin: 0 0 1rem; }
+    .prose p:last-child { margin-bottom: 0; }
+
+    .finale {
+      margin: 0;
+      max-width: 10em;
+      font-size: clamp(2.7rem, min(7.4vw, 12vh), 5.15rem);
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+    }
+
+    .signature {
+      margin: 1.35rem 0 0;
+      font-style: italic;
+      font-size: clamp(1.7rem, 4vw, 2.45rem);
+      color: #f7f1e6;
+    }
+
+    .rule {
+      width: 2.6rem;
+      height: 1px;
+      margin: 0 0 1.35rem;
+      background: var(--gold);
+    }
+
+    .slide-close .rule { margin-bottom: 1.5rem; }
+
+    .garden {
+      display: none;
+      position: absolute;
+      right: max(2.2rem, 4vw);
+      top: 8vh;
+      height: min(78vh, 760px);
+      width: auto;
+      color: var(--gold);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .garden path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.15;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav {
+      bottom: 0;
+      gap: 0.85rem;
+      padding: 0.55rem max(1.35rem, env(safe-area-inset-right)) calc(0.75rem + env(safe-area-inset-bottom)) max(1.35rem, env(safe-area-inset-left));
+    }
+
+    .navbtn {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--ink);
+      transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+
+    .navbtn:hover:not(:disabled) {
+      background: rgba(201, 163, 106, 0.08);
+      border-color: var(--gold-soft);
+    }
+
+    .navbtn:disabled {
+      opacity: 0.28;
+      cursor: default;
+    }
+
+    .navbtn svg { display: block; }
+
+    .ticks {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-width: 0;
+    }
+
+    .tick {
+      position: relative;
+      flex: 1;
+      height: 2px;
+      background: rgba(201, 163, 106, 0.22);
+      border-radius: 2px;
+    }
+
+    .tick::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -16px;
+      bottom: -16px;
+    }
+
+    .tick.is-on { background: rgba(201, 163, 106, 0.95); }
+    .tick.is-now { height: 3px; }
+
+    .sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    html:not(.js) .chrome { display: none; }
+    html:not(.js) .slide + .slide { box-shadow: inset 0 1px 0 rgba(201, 163, 106, 0.18); }
+
+    @media (min-width: 1180px) {
+      .garden { display: block; }
+    }
+
+    @media (max-width: 720px) {
+      .topbar { letter-spacing: 0.16em; }
+      .brand { max-width: 58vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .slide-inner {
+        width: min(36rem, calc(100% - 2.4rem - env(safe-area-inset-left) - env(safe-area-inset-right)));
+        padding-left: 1rem;
+      }
+      .slide-problem .slide-inner,
+      .slide-title .slide-inner,
+      .slide-close .slide-inner {
+        width: min(46rem, calc(100% - 2.4rem - env(safe-area-inset-left) - env(safe-area-inset-right)));
+      }
+      .ticks { gap: 0.28rem; }
+      h1 { font-size: clamp(3.05rem, 16vw, 4.6rem); }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      html.js .slide.is-active .rise {
+        animation: rise 0.9s var(--ease) both;
+      }
+
+      html.js .slide.is-active .rise:nth-child(2) { animation-delay: 0.08s; }
+      html.js .slide.is-active .rise:nth-child(3) { animation-delay: 0.18s; }
+      html.js .slide.is-active .rise:nth-child(4) { animation-delay: 0.3s; }
+      html.js .slide.is-active .rise:nth-child(5) { animation-delay: 0.42s; }
+      html.js .slide.is-active .rise:nth-child(6) { animation-delay: 0.52s; }
+
+      html.js .slide .spine { transform: scaleY(0); transform-origin: top center; }
+      html.js .slide.is-active .spine {
+        animation: spine 1.05s 0.05s var(--ease) forwards;
+      }
+
+      .orb-a { animation: drift 28s ease-in-out infinite; }
+      .orb-b { animation: drift 36s ease-in-out infinite reverse; }
+
+      html.js .slide.is-active .garden { animation: sway 16s ease-in-out infinite; transform-origin: 50% 100%; }
+      html.js .slide .garden .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+      html.js .slide.is-active .garden .draw {
+        animation: grow 2.4s var(--ease) forwards;
+      }
+      html.js .slide.is-active .garden .draw:nth-child(1) { animation-delay: 0.15s; }
+      html.js .slide.is-active .garden .draw:nth-child(2) { animation-delay: 0.45s; }
+      html.js .slide.is-active .garden .draw:nth-child(3) { animation-delay: 0.7s; }
+      html.js .slide.is-active .garden .draw:nth-child(4) { animation-delay: 0.95s; }
+      html.js .slide.is-active .garden .draw:nth-child(5) { animation-delay: 1.15s; }
+      html.js .slide.is-active .garden .draw:nth-child(6) { animation-delay: 1.35s; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js .slide,
+      html.js .slide.is-active {
+        transform: none;
+        transition: none;
+      }
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translate3d(0, 16px, 0); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @keyframes spine {
+      to { transform: scaleY(1); }
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(-3%, 3.5%, 0) scale(1.07); }
+    }
+
+    @keyframes sway {
+      0%, 100% { transform: rotate(-0.5deg); }
+      50% { transform: rotate(0.7deg); }
+    }
+
+    @keyframes grow {
+      to { stroke-dashoffset: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="frame chrome" aria-hidden="true"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i></div>
+
+  <header class="topbar chrome is-first">
+    <span class="brand">What I will change</span>
+    <span class="count"><b data-now>01</b> <span data-all>/ 10</span></span>
+  </header>
+
+  <main class="deck" aria-roledescription="presentation">
+    <section class="slide slide-title is-active" aria-label="What I will change" aria-roledescription="slide">
+      <svg class="garden" viewBox="0 0 240 820" aria-hidden="true">
+        <path class="draw" pathLength="1" d="M148 800 C144 690 170 620 140 540 C112 462 178 392 148 312 C124 246 170 186 144 108 C128 58 160 34 138 6"/>
+        <path class="draw" pathLength="1" d="M140 548 C178 532 220 498 234 456 C204 482 170 516 140 548"/>
+        <path class="draw" pathLength="1" d="M146 468 C108 448 70 414 54 372 C90 394 122 434 146 468"/>
+        <path class="draw" pathLength="1" d="M148 318 C190 296 228 258 240 214 C208 240 174 280 148 318"/>
+        <path class="draw" pathLength="1" d="M144 228 C104 210 68 178 54 140 C88 160 120 198 144 228"/>
+        <path class="draw" pathLength="1" d="M144 132 C176 112 206 82 214 46 C186 68 162 102 144 132"/>
+      </svg>
+      <div class="slide-inner">
+        <div class="spine" aria-hidden="true"></div>
+        <h1 class="rise">What I will<br><em>change</em></h1>
+        <p class="lede rise">I want to say this clearly. These are the places I have been falling short, and the changes I mean to make.</p>
+        <p class="hint rise">Tap, swipe, or use arrow keys</p>
+      </div>
+    </section>
+
+    <section class="slide slide-problem" aria-label="Problem 1" aria-roledescription="slide">
+      <div class="slide-inner">
+        <div class="spine" aria-hidden="true"></div>
+        <p class="kicker rise">Problem 1</p>
+        <blockquote class="quote rise">Not putting in the right efforts or simply the lack of efforts. Actions and words are both necessary and I am missing either of those.</blockquote>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Words" aria-roledescription="slide">
+      <div class="slide-inner">
+        <div class="spine" aria-hidden="true"></div>
+        <p class="kicker rise">A change</p>
+        <h2 class="rise">Words</h2>
+        <div class="rule rise" aria-hidden="true"></div>
+        <div class="prose rise">
+          <p>I want to be more vocal about my feelings and thoughts. I never even complimented you, even though I had these thoughts in my mind. Whenever I think you look so beautiful, or elegant, these thoughts are somehow forever trapped in my mind.</p>
+          <p>I should express them in the future and be more expressive with my words. It will change a lot. I think I began trying that during our conversation last night. I will actively change this.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Actions" aria-roledescription="slide">
+      <div class="slide-inner">
+        <div class="spine" aria-hidden="true"></div>
+        <p class="kicker rise">A change</p>
+        <h2 class="rise">Actions</h2>
+        <div class="rule rise" aria-hidden="true"></div>
+        <div class="prose rise">
+          <p>While action can certainly include buying gifts and flowers, the small gestures can be more important. I don’t have experience knowing what might be the right gestures, but I believe these are some I should try.</p>
+          <p>In addition to practical help when you need it, I want to offer small acts of kindness: giving you small things, or sending thoughtful texts along the day (less bro-like) to cheer up your mood. As you mentioned yesterday, you like hugs, which I also like. I will hug you a lot if I ever notice you might be feeling down, or off for the day.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide slide-problem" aria-label="Problem 2" aria-roledescription="slide">
+      <div class="slide-inner">
+        <div class="spine" aria-hidden="true"></div>
+        <p class="kicker rise">Problem 2</p>
+        <blockquote class="quote rise">Failing to understand you from your perspective, being insensitive to your emotions.</blockquote>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Your perspective" aria-roledescription="slide">
+      <div class="slide-inner">
+        <div class="spine" aria-hidden="true"></div>
+        <p class="kicker rise">A change</p>
+        <h2 class="rise">Your perspective</h2>
+        <div class="rule rise" aria-hidden="true"></div>
+        <div class="prose rise">
+          <p>At least for the initial stage, for every action or event, I should consciously put myself in your shoes. This will feel unnatural, and I will definitely need your assistance until I can adopt it as a habit, without needing to constantly remind myself to do it.</p>
+          <p>I believe I am capable of doing it, but it will take immense effort, and a period where I need to constantly remind myself to always think and sympathize from the other person’s perspective in everything I do. I will also notice more when other people do this, especially learning from people like James.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide slide-problem" aria-label="Problem 3" aria-roledescription="slide">
+      <div class="slide-inner">
+        <div class="spine" aria-hidden="true"></div>
+        <p class="kicker rise">Problem 3</p>
+        <blockquote class="quote rise">Not being emotional present while only being physically present. Sometimes, I even manage my schedule poorly I am not physically present.</blockquote>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Listening" aria-roledescription="slide">
+      <div class="slide-inner">
+        <div class="spine" aria-hidden="true"></div>
+        <p class="kicker rise">A change</p>
+        <h2 class="rise">Listening</h2>
+        <div class="rule rise" aria-hidden="true"></div>
+        <div class="prose rise">
+          <p>I will actively listen to what you have to say, and affirm it first before providing actual feedback, or perhaps no feedback at all. Making our interaction a comfortable space for deep conversation is essential, and that requires more active listening, perhaps even without interruption.</p>
+          <p>In the past, I have assumed the role of giving feedback anytime someone came to talk to me about something, so that is something I need to fix for sure. Furthermore, I need to be more honest with my thoughts. I need to be more open to sharing my feelings instead of suppressing them. This can make our interaction more emotionally intimate than an academic conversation.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="Time" aria-roledescription="slide">
+      <div class="slide-inner">
+        <div class="spine" aria-hidden="true"></div>
+        <p class="kicker rise">A change</p>
+        <h2 class="rise">Time</h2>
+        <div class="rule rise" aria-hidden="true"></div>
+        <div class="prose rise">
+          <p>This is more of a practical change, considering that we are both very busy and have our own schedules. I think it is important we talk about the time we are willing to give going forward, and how we can accommodate such a schedule. Especially, I need to adjust my horrible schedule.</p>
+          <p>One solution we proposed is waking up earlier in the morning to spend time together prior to classes, where meeting up in person can help decide the plan for the day without needing to make the plan on text, and where we are not only seeing each other at night. In addition, it will brighten my day to see you in the morning and help me feel more prepared for the day, and I hope you do too.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide slide-close" aria-label="Close" aria-roledescription="slide">
+      <div class="slide-inner">
+        <div class="spine" aria-hidden="true"></div>
+        <div class="rule rise" aria-hidden="true"></div>
+        <p class="finale rise">This is what<br>I will change.</p>
+        <p class="signature rise">Jerry</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="nav chrome">
+    <button class="navbtn" type="button" data-prev aria-label="Previous slide" disabled>
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.2 2.8 4.8 8l5.4 5.2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="ticks" data-ticks></div>
+    <button class="navbtn" type="button" data-next aria-label="Next slide">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.8 2.8 11.2 8l-5.4 5.2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </footer>
+
+  <p class="sr" data-live aria-live="polite"></p>
+
+  <script>
+    (function () {
+      var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+      var ticksHost = document.querySelector("[data-ticks]");
+      var nowEl = document.querySelector("[data-now]");
+      var allEl = document.querySelector("[data-all]");
+      var live = document.querySelector("[data-live]");
+      var prevBtn = document.querySelector("[data-prev]");
+      var nextBtn = document.querySelector("[data-next]");
+      var topbar = document.querySelector(".topbar");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+      var index = -1;
+      var booted = false;
+      var touchX = 0;
+      var touchY = 0;
+      var ignoreClick = false;
+      var ticks = [];
+
+      function pad(n) {
+        return (n < 10 ? "0" : "") + n;
+      }
+
+      function readHash() {
+        var match = /^#(\d+)$/.exec(location.hash || "");
+        if (!match) return 0;
+        var n = parseInt(match[1], 10);
+        if (!isFinite(n)) return 0;
+        return Math.max(0, Math.min(slides.length - 1, n - 1));
+      }
+
+      function labelFor(slide) {
+        return slide.getAttribute("aria-label") || "Slide";
+      }
+
+      slides.forEach(function (slide, i) {
+        var tick = document.createElement("button");
+        tick.type = "button";
+        tick.className = "tick";
+        tick.setAttribute("aria-label", "Go to slide " + (i + 1) + ", " + labelFor(slide));
+        tick.addEventListener("click", function (event) {
+          event.stopPropagation();
+          go(i);
+        });
+        ticksHost.appendChild(tick);
+        ticks.push(tick);
+      });
+
+      function apply(next, push) {
+        next = Math.max(0, Math.min(slides.length - 1, next));
+        index = next;
+        slides.forEach(function (slide, i) {
+          var on = i === index;
+          slide.classList.toggle("is-active", on);
+          if (on) slide.removeAttribute("inert");
+          else slide.setAttribute("inert", "");
+          slide.setAttribute("aria-hidden", on ? "false" : "true");
+          if (on) slide.scrollTop = 0;
+        });
+        ticks.forEach(function (tick, i) {
+          tick.classList.toggle("is-on", i <= index);
+          tick.classList.toggle("is-now", i === index);
+          if (i === index) tick.setAttribute("aria-current", "true");
+          else tick.removeAttribute("aria-current");
+        });
+        nowEl.textContent = pad(index + 1);
+        allEl.textContent = "/ " + pad(slides.length);
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index === slides.length - 1;
+        topbar.classList.toggle("is-first", index === 0);
+        if (booted) {
+          live.textContent = "Slide " + (index + 1) + " of " + slides.length + ", " + labelFor(slides[index]);
+        }
+        booted = true;
+        var hash = "#" + (index + 1);
+        if (push) {
+          if (location.hash !== hash) history.pushState({ i: index }, "", hash);
+        }
+      }
+
+      function go(next) {
+        if (next === index || next < 0 || next >= slides.length) return;
+        apply(next, true);
+      }
+
+      function edgeScroll(dir) {
+        var slide = slides[index];
+        var max = slide.scrollHeight - slide.clientHeight;
+        if (max <= 2) return false;
+        if (dir > 0 && slide.scrollTop < max - 2) {
+          slide.scrollBy({ top: slide.clientHeight * 0.72, behavior: reduce.matches ? "auto" : "smooth" });
+          return true;
+        }
+        if (dir < 0 && slide.scrollTop > 2) {
+          slide.scrollBy({ top: -slide.clientHeight * 0.72, behavior: reduce.matches ? "auto" : "smooth" });
+          return true;
+        }
+        return false;
+      }
+
+      prevBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        go(index - 1);
+      });
+      nextBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        go(index + 1);
+      });
+
+      document.addEventListener("click", function (event) {
+        if (ignoreClick) {
+          ignoreClick = false;
+          return;
+        }
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+        if (event.target.closest("button, a, .nav, .topbar")) return;
+        if (String(window.getSelection() || "").length) return;
+        go(index + 1);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.altKey || event.metaKey || event.ctrlKey) return;
+        if (event.target && event.target.closest && event.target.closest("button") && (event.key === " " || event.key === "Enter")) return;
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          go(index + 1);
+        } else if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          go(index - 1);
+        } else if (event.key === "ArrowDown" || event.key === "PageDown" || (event.key === " " && !event.shiftKey)) {
+          event.preventDefault();
+          if (!edgeScroll(1)) go(index + 1);
+        } else if (event.key === "ArrowUp" || event.key === "PageUp" || (event.key === " " && event.shiftKey)) {
+          event.preventDefault();
+          if (!edgeScroll(-1)) go(index - 1);
+        } else if (event.key === "Home") {
+          event.preventDefault();
+          go(0);
+        } else if (event.key === "End") {
+          event.preventDefault();
+          go(slides.length - 1);
+        }
+      });
+
+      document.addEventListener("touchstart", function (event) {
+        if (event.touches.length !== 1) return;
+        touchX = event.touches[0].clientX;
+        touchY = event.touches[0].clientY;
+      }, { passive: true });
+
+      document.addEventListener("touchend", function (event) {
+        var touch = event.changedTouches[0];
+        var dx = touch.clientX - touchX;
+        var dy = touch.clientY - touchY;
+        if (Math.abs(dx) < 52 || Math.abs(dx) < Math.abs(dy) * 1.25) return;
+        ignoreClick = true;
+        if (dx < 0) go(index + 1);
+        else go(index - 1);
+      }, { passive: true });
+
+      window.addEventListener("popstate", function () {
+        apply(readHash(), false);
+      });
+
+      apply(readHash(), false);
+    })();
+  </script>
+</body>
+</html>

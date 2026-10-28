@@ -1,0 +1,8 @@
+Instrument Serif
+Copyright 2022 The Instrument Serif Project Authors (https://github.com/Instrument/instrument-serif)
+
+Newsreader
+Copyright 2020 The Newsreader Project Authors (http://github.com/productiontype/Newsreader)
+Newsreader is a registered trademark of Production Systems SAS.
+
+Both families are licensed under the SIL Open Font License, Version 1.1. See OFL.txt.
