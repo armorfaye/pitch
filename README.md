@@ -1,4 +1,4 @@
-# What I will change
+# My First Ever Pitch of myself
 
 A personal, single-page note by Jerry Liu. One HTML file, no build step.
 
